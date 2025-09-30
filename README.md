@@ -29,5 +29,7 @@
   - Interactive maps & tables
 
 - **Chatbot Integration**
-```html
-<script id="omnidimension-web-widget" async src="https://backend.omnidim.io/web_widget.js?secret_key=57a828a2da6f096eb4c50718c866f681"></script>
+  - Multi-linguistic
+  - that is it understand both hindi and english 
+  - it also understand in Hinglish 
+  
