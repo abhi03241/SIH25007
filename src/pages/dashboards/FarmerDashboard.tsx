@@ -36,12 +36,12 @@ export default function FarmerDashboard() {
 
   return (
     <div className="min-h-screen bg-background farmer-theme">
-      <Navbar title="Farmer Dashboard" />
+      <Navbar title={t('nav.dashboard')} />
       
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Welcome back, Farmer!</h1>
-          <p className="text-muted-foreground">Manage your livestock and stay updated with treatments.</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">{t('roles.farmer')}</h1>
+          <p className="text-muted-foreground">{t('roles.farmer_description')}</p>
         </div>
 
         {/* Quick Stats */}
@@ -50,7 +50,7 @@ export default function FarmerDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Cattle</p>
+                  <p className="text-sm text-muted-foreground">{t('stats.registered_cattle')}</p>
                   <p className="text-2xl font-bold text-primary">{cattleData.length}</p>
                 </div>
                 <Heart className="h-8 w-8 text-primary" />
@@ -62,7 +62,7 @@ export default function FarmerDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Under Treatment</p>
+                  <p className="text-sm text-muted-foreground">{t('stats.treatments_tracked')}</p>
                   <p className="text-2xl font-bold text-accent">1</p>
                 </div>
                 <Stethoscope className="h-8 w-8 text-accent" />
@@ -74,7 +74,7 @@ export default function FarmerDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Active Alerts</p>
+                  <p className="text-sm text-muted-foreground">{t('stats.active_alerts')}</p>
                   <p className="text-2xl font-bold text-destructive">{alerts.length}</p>
                 </div>
                 <AlertTriangle className="h-8 w-8 text-destructive" />
@@ -86,7 +86,7 @@ export default function FarmerDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Last Visit</p>
+                  <p className="text-sm text-muted-foreground">{t('farmer.last_visit')}</p>
                   <p className="text-sm font-semibold">Jan 15, 2024</p>
                 </div>
                 <Calendar className="h-8 w-8 text-primary" />
@@ -102,11 +102,11 @@ export default function FarmerDashboard() {
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="flex items-center">
                   <Heart className="mr-2 h-5 w-5" />
-                  My Cattle
+                  {t('nav.cattle')}
                 </CardTitle>
                 <Button className="gradient-primary text-primary-foreground">
                   <Plus className="mr-2 h-4 w-4" />
-                  Register New Cattle
+                  {t('farmer.register_cattle')}
                 </Button>
               </CardHeader>
               <CardContent>
@@ -136,7 +136,7 @@ export default function FarmerDashboard() {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Clock className="mr-2 h-5 w-5" />
-                  Recent Treatments
+                  {t('farmer.treatment_history')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -169,7 +169,7 @@ export default function FarmerDashboard() {
               <CardHeader>
                 <CardTitle className="flex items-center text-destructive">
                   <AlertTriangle className="mr-2 h-5 w-5" />
-                  Alerts
+                  {t('stats.active_alerts')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -195,7 +195,7 @@ export default function FarmerDashboard() {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Stethoscope className="mr-2 h-5 w-5" />
-                  My Veterinarian
+                  {t('farmer.my_veterinarian')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -205,7 +205,7 @@ export default function FarmerDashboard() {
                   </div>
                   <div>
                     <h3 className="font-semibold">Dr. Rajesh Sharma</h3>
-                    <p className="text-sm text-muted-foreground">Veterinary Officer</p>
+                    <p className="text-sm text-muted-foreground">{t('farmer.vet_label')}</p>
                     <div className="flex items-center justify-center text-sm text-muted-foreground mt-2">
                       <MapPin className="h-3 w-3 mr-1" />
                       District Veterinary Hospital
@@ -213,7 +213,7 @@ export default function FarmerDashboard() {
                   </div>
                   <Button variant="outline" size="sm" className="w-full">
                     <Phone className="mr-2 h-4 w-4" />
-                    Contact Vet
+                    {t('farmer.contact_vet')}
                   </Button>
                 </div>
               </CardContent>
@@ -222,21 +222,21 @@ export default function FarmerDashboard() {
             {/* Quick Actions */}
             <Card className="shadow-agricultural">
               <CardHeader>
-                <CardTitle>Quick Actions</CardTitle>
+                <CardTitle>{t('farmer.feature_registration')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
                   <Button variant="outline" className="w-full justify-start">
                     <Plus className="mr-2 h-4 w-4" />
-                    Add New Cattle
+                    {t('farmer.register_cattle')}
                   </Button>
                   <Button variant="outline" className="w-full justify-start">
                     <Clock className="mr-2 h-4 w-4" />
-                    View All Treatments
+                    {t('farmer.treatment_history')}
                   </Button>
                   <Button variant="outline" className="w-full justify-start">
                     <Phone className="mr-2 h-4 w-4" />
-                    Emergency Contact
+                    {t('farmer.contact_vet')}
                   </Button>
                 </div>
               </CardContent>

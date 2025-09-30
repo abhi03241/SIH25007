@@ -15,70 +15,42 @@ export default function FarmerAuth() {
   const { toast } = useToast();
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [step, setStep] = useState<'details' | 'otp'>('details');
-  const [formData, setFormData] = useState({
-    aadhaar: '',
-    name: '',
-    phone: '',
-    otp: ''
-  });
+  const [formData, setFormData] = useState({ aadhaar: '', name: '', phone: '', otp: '' });
 
   const handleSubmitDetails = (e: React.FormEvent) => {
     e.preventDefault();
     if (mode === 'register' && (!formData.aadhaar || !formData.name || !formData.phone)) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill all required fields.",
-        variant: "destructive"
-      });
+      toast({ title: t('farmerAuth.toast.missingInfo'), variant: 'destructive' });
       return;
     }
     if (mode === 'login' && (!formData.phone || !formData.aadhaar)) {
-      toast({
-        title: "Missing Information",
-        description: "Please enter Aadhaar and phone number.",
-        variant: "destructive"
-      });
+      toast({ title: t('farmerAuth.toast.missingLoginInfo'), variant: 'destructive' });
       return;
     }
-    
-    toast({
-      title: "OTP Sent",
-      description: `OTP sent to ${formData.phone}`,
-    });
+
+    toast({ title: t('farmerAuth.toast.otpSent').replace('{phone}', formData.phone) });
     setStep('otp');
   };
 
   const handleVerifyOTP = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.otp) {
-      toast({
-        title: "Invalid OTP",
-        description: "Please enter the OTP.",
-        variant: "destructive"
-      });
+      toast({ title: t('farmerAuth.toast.invalidOtp'), variant: 'destructive' });
       return;
     }
 
-    toast({
-      title: "Login Successful",
-      description: "Welcome to your farmer dashboard!",
-    });
+    toast({ title: t('farmerAuth.toast.loginSuccess') });
     navigate('/farmer/dashboard');
   };
 
   return (
     <div className="min-h-screen bg-background farmer-theme">
-      <Navbar title="Farmer Authentication" />
-      
+      <Navbar title={t('roles.farmer')} />
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-md mx-auto">
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate('/')}
-            className="mb-6"
-          >
+          <Button variant="ghost" onClick={() => navigate('/')} className="mb-6">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Home
+            {t('farmerAuth.back')}
           </Button>
 
           <Card className="shadow-agricultural-strong">
@@ -87,25 +59,30 @@ export default function FarmerAuth() {
                 <Tractor className="h-8 w-8 text-primary-foreground" />
               </div>
               <CardTitle className="text-2xl">
-                {step === 'details' ? (mode === 'login' ? 'Farmer Login' : 'Farmer Registration') : 'Verify OTP'}
+                {step === 'details'
+                  ? mode === 'login'
+                    ? t('farmerAuth.title.login')
+                    : t('farmerAuth.title.register')
+                  : t('farmerAuth.title.verifyOtp')}
               </CardTitle>
               <p className="text-muted-foreground">
-                {step === 'details' 
-                  ? (mode === 'login' ? 'Enter your Aadhaar and phone number' : 'Enter your Aadhaar, name, and phone number')
-                  : `Enter the OTP sent to ${formData.phone}`
-                }
+                {step === 'details'
+                  ? mode === 'login'
+                    ? t('farmerAuth.details.login')
+                    : t('farmerAuth.details.register')
+                  : `${t('farmerAuth.otp.placeholder')} ${formData.phone}`}
               </p>
             </CardHeader>
-            
+
             <CardContent>
               {step === 'details' ? (
                 <form onSubmit={handleSubmitDetails} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="aadhaar">Aadhaar Number</Label>
+                    <Label htmlFor="aadhaar">{t('farmerAuth.aadhaar.label')}</Label>
                     <Input
                       id="aadhaar"
                       type="text"
-                      placeholder="Enter 12-digit Aadhaar number"
+                      placeholder={t('farmerAuth.aadhaar.placeholder')}
                       value={formData.aadhaar}
                       onChange={(e) => setFormData(prev => ({ ...prev, aadhaar: e.target.value }))}
                       maxLength={12}
@@ -113,17 +90,17 @@ export default function FarmerAuth() {
                     />
                     <div className="flex items-center text-xs text-muted-foreground">
                       <Shield className="h-3 w-3 mr-1" />
-                      Your Aadhaar is secure and encrypted
+                      {t('farmerAuth.aadhaar.secure')}
                     </div>
                   </div>
 
                   {mode === 'register' && (
                     <div className="space-y-2">
-                      <Label htmlFor="name">Full Name</Label>
+                      <Label htmlFor="name">{t('farmerAuth.name.label')}</Label>
                       <Input
                         id="name"
                         type="text"
-                        placeholder="Enter your full name"
+                        placeholder={t('farmerAuth.name.placeholder')}
                         value={formData.name}
                         onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                         required
@@ -132,22 +109,19 @@ export default function FarmerAuth() {
                   )}
 
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
+                    <Label htmlFor="phone">{t('farmerAuth.phone.label')}</Label>
                     <Input
                       id="phone"
                       type="tel"
-                      placeholder="Enter your mobile number"
+                      placeholder={t('farmerAuth.phone.placeholder')}
                       value={formData.phone}
                       onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                       required
                     />
                   </div>
 
-                  <Button 
-                    type="submit" 
-                    className="w-full gradient-primary text-primary-foreground"
-                  >
-                    Send OTP
+                  <Button type="submit" className="w-full gradient-primary text-primary-foreground">
+                    {t('farmerAuth.sendOtp')}
                   </Button>
 
                   <div className="text-center mt-4">
@@ -159,18 +133,20 @@ export default function FarmerAuth() {
                         setFormData({ aadhaar: '', name: '', phone: '', otp: '' });
                       }}
                     >
-                      {mode === 'login' ? "Don't have an account? Register" : 'Already have an account? Login'}
+                      {mode === 'login'
+                        ? t('farmerAuth.continueAsLogin')
+                        : t('farmerAuth.continueAsRegister')}
                     </Button>
                   </div>
                 </form>
               ) : (
                 <form onSubmit={handleVerifyOTP} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="otp">Enter OTP</Label>
+                    <Label htmlFor="otp">{t('farmerAuth.otp.placeholder')}</Label>
                     <Input
                       id="otp"
                       type="text"
-                      placeholder="Enter 6-digit OTP"
+                      placeholder={t('farmerAuth.otp.placeholder')}
                       value={formData.otp}
                       onChange={(e) => setFormData(prev => ({ ...prev, otp: e.target.value }))}
                       maxLength={6}
@@ -180,34 +156,23 @@ export default function FarmerAuth() {
                   </div>
 
                   <div className="flex space-x-2">
-                    <Button 
-                      type="button"
-                      variant="outline"
-                      className="flex-1"
-                      onClick={() => setStep('details')}
-                    >
-                      Back
+                    <Button type="button" variant="outline" className="flex-1" onClick={() => setStep('details')}>
+                      {t('farmerAuth.back')}
                     </Button>
-                    <Button 
-                      type="submit" 
-                      className="flex-1 gradient-primary text-primary-foreground"
-                    >
-                      Verify & Login
+                    <Button type="submit" className="flex-1 gradient-primary text-primary-foreground">
+                      {t('farmerAuth.verify')}
                     </Button>
                   </div>
 
-                  <Button 
+                  <Button
                     type="button"
                     variant="ghost"
                     className="w-full text-sm"
-                    onClick={() => {
-                      toast({
-                        title: "OTP Resent",
-                        description: `New OTP sent to ${formData.phone}`,
-                      });
-                    }}
+                    onClick={() =>
+                      toast({ title: t('farmerAuth.toast.otpResent').replace('{phone}', formData.phone) })
+                    }
                   >
-                    Resend OTP
+                    {t('farmerAuth.resendOtp')}
                   </Button>
                 </form>
               )}

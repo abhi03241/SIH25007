@@ -29,61 +29,61 @@ export function Navbar({
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Mapping language codes to display names
+  const languageNames: Record<typeof language, string> = {
+    en: 'English',
+    hi: 'हिंदी',
+  };
+
   return (
     <nav className="border-b bg-card shadow-agricultural">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">LC</span>
+              <span className="text-white font-bold text-sm">LC</span>
             </div>
             <h1 className="text-xl font-semibold text-foreground">{title}</h1>
           </div>
-          
+
           <div className="flex items-center space-x-2">
             {showAuth && location.pathname === '/' && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="sm">
                     <LogIn className="h-4 w-4 mr-1" />
-                    <span className="hidden sm:inline">Login</span>
+                    <span className="hidden sm:inline">{t('auth.login')}</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem onClick={() => navigate('/auth/farmer')}>
-                    Farmer Login
+                    {t('roles.farmer')}
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/auth/vet')}>
-                    Veterinarian Login
+                    {t('roles.veterinarian')}
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/auth/admin')}>
-                    Admin Login
+                    {t('roles.admin')}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
-            
+
             {showLanguageToggle && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="sm">
                     <Globe className="h-4 w-4" />
-                    <span className="ml-1 hidden sm:inline">
-                      {language.toUpperCase()}
-                    </span>
+                    <span className="ml-1 hidden sm:inline">{languageNames[language]}</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => setLanguage('en')}>
-                    English
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setLanguage('hi')}>
-                    हिंदी
-                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setLanguage('en')}>English</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setLanguage('hi')}>हिंदी</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
-            
+
             {showThemeToggle && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
